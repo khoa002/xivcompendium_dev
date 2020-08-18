@@ -1,0 +1,33 @@
+version: '3.1'
+
+services:
+
+  xivcompendium-mysql:
+    build:
+      context: ./xivc-mysql
+    container_name: xivcompendium-mysql
+    image: xivcompendium-mysql
+    env_file:
+      - ./.env
+    restart: always
+    volumes:
+      - xivcompendium-data-vol:/var/lib/mysql
+    command: --default-authentication-plugin=mysql_native_password
+    expose:
+      - "3306"
+
+  xivcompendium-lumen:
+    build:
+      context: ./xivc-lumen
+    container_name: xivcompendium-lumen
+    image: xivcompendium-lumen
+    env_file:
+      - ./.env
+    restart: always
+    ports:
+      - "8080:80"
+    depends_on:
+      - xivcompendium-mysql
+
+volumes:
+  xivcompendium-data-vol:

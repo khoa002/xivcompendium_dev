@@ -1,1 +1,1 @@
-# xivcompendium_dev
+# xivcompendium dev stack
